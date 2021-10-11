@@ -46,7 +46,7 @@ public final class FeatureFlags {
     private FeatureFlags() { }
 
     public static boolean showFlagTogglerUi(Context context) {
-        return BuildConfig.IS_DEBUG_DEVICE && Utilities.isDevelopersOptionsEnabled(context);
+        return Utilities.isDevelopersOptionsEnabled(context);
     }
 
     /**
@@ -423,5 +423,24 @@ public final class FeatureFlags {
         public int get() {
             return sIntReader.applyAsInt(this);
         }
+<<<<<<< HEAD
+=======
+
+        public void initialize(Context context) {
+            SharedPreferences prefs =
+                    context.getSharedPreferences(FLAGS_PREF_NAME, Context.MODE_PRIVATE);
+            mHasBeenChangedAtLeastOnce = prefs.contains(key);
+            mCurrentValue = prefs.getBoolean(key, defaultValue);
+        }
+
+        @Override
+        protected StringBuilder appendProps(StringBuilder src) {
+            return super.appendProps(src).append(", mCurrentValue=").append(mCurrentValue);
+        }
+    }
+
+    private static BooleanFlag getDebugFlag(String key, boolean defaultValue, String description) {
+        return new DebugFlag(key, defaultValue, description);
+>>>>>>> ec89d4760a (Launcher3: Allow changing feature flags on user builds)
     }
 }
